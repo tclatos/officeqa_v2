@@ -1,0 +1,39 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.pytest_cache/
+.ruff_cache/
+.deer-flow/
+
+# Data directory & artifacts (not committed)
+data/
+*.parquet
+*.db
+*.db.wal
+
+.agents.input.history
+
+# ── Secrets ────────────────────────────────────────────────────────────────────
+.env
+.env.*
+
+# ── Editors / OS ───────────────────────────────────────────────────────────────
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.DS_Store
+data/financebench/
+
+# VS Code workspace files
+*.code-workspace
+
+
+
+.deer-flow/

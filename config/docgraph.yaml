@@ -1,0 +1,61 @@
+# Document Graph building profile for OfficeQA Pro V2 (Accounts of Receipts and Expenditures)
+default_profile: officeqa_v2
+
+docgraph_profiles:
+  officeqa_v2:
+    description: "OfficeQA Pro V2 Document Graph built from pre-parsed JSON corpus (Accounts of Receipts and Expenditures)"
+    markdownize_profile: fast
+
+    paths:
+      sources_dir: ${paths.data_root}/officeqa_v2/jsons
+      markdown_dir: ${paths.data_root}/officeqa_v2/markdown_multi
+      kg_db: ${paths.data_root}/kg/officeqa_v2.db
+      saved_markdown_dir: ${paths.data_root}/officeqa_v2/saved_markdown
+
+    ladybug:
+      buffer_pool_size: ${oc.env:LADYBUG_BUFFER_POOL_SIZE,8GB}
+
+    llms:
+      summary: deepseek-v4-flash-0731(none)@openrouter
+      image: gemini-2.5-flash@openrouter
+
+    images:
+      enabled: false
+
+    build:
+      structure_strategy: algo
+      generate_summaries: false
+      fts: true
+      chunk_size_tokens: 1500
+      workers: 6
+      skip_ocr: false
+      force: false
+
+  default:
+    description: "OfficeQA Pro V2 Document Graph (default alias)"
+    markdownize_profile: fast
+
+    paths:
+      sources_dir: ${paths.data_root}/officeqa_v2/jsons
+      markdown_dir: ${paths.data_root}/officeqa_v2/markdown_multi
+      kg_db: ${paths.data_root}/kg/officeqa_v2.db
+      saved_markdown_dir: ${paths.data_root}/officeqa_v2/saved_markdown
+
+    ladybug:
+      buffer_pool_size: ${oc.env:LADYBUG_BUFFER_POOL_SIZE,8GB}
+
+    llms:
+      summary: deepseek-v4-flash-0731(none)@openrouter
+      image: gemini-2.5-flash@openrouter
+
+    images:
+      enabled: false
+
+    build:
+      structure_strategy: algo
+      generate_summaries: false
+      fts: true
+      chunk_size_tokens: 1500
+      workers: 6
+      skip_ocr: false
+      force: false

@@ -1,0 +1,110 @@
+# Unified Agent Profiles — officeqa_v2
+#
+# Contains the OfficeQA Pro V2 QA Analyst deep agent profile.
+
+agents:
+  default:
+    harness: langchain
+    name: "OfficeQA Pro V2 Analyst"
+    type: deep
+    llm: glm_5.3_Flash@openrouter
+    description: "Deep agent answering OfficeQA Pro V2 questions across Accounts of Receipts and Expenditures."
+    system_prompt: |
+      You are an expert financial and historical analyst answering OfficeQA Pro V2 questions across two centuries
+      (1793–2024) of U.S. Federal Accounts of Receipts and Expenditures and Combined Statements.
+      You navigate the Document Graph using your tools: `get_folder_toc`, `get_document_toc`, `get_section_content`, `search_sections`.
+      Always start by reading your domain skill `officeqa-v2-qa` (`/custom/officeqa-v2-qa/SKILL.md`) for
+      essential multi-document navigation rules, historical conventions, and exact formatting instructions.
+
+      Critical rules:
+      1. Use `get_folder_toc` and `get_document_toc` to locate target sections.
+      2. Multi-document questions require gathering data across multiple reports (e.g. 1792 through 1799). Maintain clear working state.
+      3. Always use `python_interpreter` for calculations (OLS linear regressions, exponential moving averages, Gini coefficients, Theta method).
+      4. Always end your response with the final answer enclosed in `<FINAL_ANSWER>...</FINAL_ANSWER>` XML tags.
+         Examples: `<FINAL_ANSWER>[Massachusetts, 0.866]</FINAL_ANSWER>`, `<FINAL_ANSWER>$7,046,001.98</FINAL_ANSWER>`, `<FINAL_ANSWER>21.58</FINAL_ANSWER>`.
+    tools:
+      - genai_tk.agents.tools.langchain.search_tools_factory.create_search_tool
+      - officeqa_v2.tools.calculator.create_calculator_tools
+    skill_directories:
+      - ${paths.project}/skills/custom
+      - ${paths.project}/skills/community
+    middlewares:
+      - class: genai_tk.agents.langchain.middleware.empty_response_retry.EmptyResponseRetryMiddleware
+        max_retries: 2
+        fallback_llm: claude-sonnet@openrouter
+      - class: genai_tk.agents.langchain.middleware.rich_middleware.RichToolCallMiddleware
+      - class: genai_tk.agents.langchain.middleware.observation_truncation_middleware.ObservationTruncationMiddleware
+        max_chars: 14000
+        head_ratio: 0.8
+      - class: genai_tk.agents.langchain.middleware.deduplicate_middleware.DeduplicateToolCallsMiddleware
+        tools: ["get_document_toc", "get_folder_toc", "list_documents", "search_sections", "get_section_content", "web_search"]
+        mode: "stub"
+      - class: genai_graph.agent.middleware.map_before_search.MapBeforeSearchMiddleware
+        max_consecutive: 3
+      - class: genai_graph.agent.middleware.wrap_up.WrapUpMiddleware
+        soft_limit: 28
+        hard_limit: 40
+    checkpointer:
+      type: none
+    backend:
+      type: none
+    enable_planning: true
+    enable_file_system: true
+    fs_permissions:
+      - operations: ["read", "write"]
+        paths: ["/officeqa_v2/data/**"]
+        mode: deny
+    recursion_limit: 160
+
+  officeqa_v2:
+    harness: langchain
+    name: "OfficeQA Pro V2 Analyst"
+    type: deep
+    llm: glm_5.3_Flash@openrouter
+    description: "Deep agent answering OfficeQA Pro V2 questions across Accounts of Receipts and Expenditures."
+    system_prompt: |
+      You are an expert financial and historical analyst answering OfficeQA Pro V2 questions across two centuries
+      (1793–2024) of U.S. Federal Accounts of Receipts and Expenditures and Combined Statements.
+      You navigate the Document Graph using your tools: `get_folder_toc`, `get_document_toc`, `get_section_content`, `search_sections`.
+      Always start by reading your domain skill `officeqa-v2-qa` (`/custom/officeqa-v2-qa/SKILL.md`) for
+      essential multi-document navigation rules, historical conventions, and exact formatting instructions.
+
+      Critical rules:
+      1. Use `get_folder_toc` and `get_document_toc` to locate target sections.
+      2. Multi-document questions require gathering data across multiple reports (e.g. 1792 through 1799). Maintain clear working state.
+      3. Always use `python_interpreter` for calculations (OLS linear regressions, exponential moving averages, Gini coefficients, Theta method).
+      4. Always end your response with the final answer enclosed in `<FINAL_ANSWER>...</FINAL_ANSWER>` XML tags.
+         Examples: `<FINAL_ANSWER>[Massachusetts, 0.866]</FINAL_ANSWER>`, `<FINAL_ANSWER>$7,046,001.98</FINAL_ANSWER>`, `<FINAL_ANSWER>21.58</FINAL_ANSWER>`.
+    tools:
+      - genai_tk.agents.tools.langchain.search_tools_factory.create_search_tool
+      - officeqa_v2.tools.calculator.create_calculator_tools
+    skill_directories:
+      - ${paths.project}/skills/custom
+      - ${paths.project}/skills/community
+    middlewares:
+      - class: genai_tk.agents.langchain.middleware.empty_response_retry.EmptyResponseRetryMiddleware
+        max_retries: 2
+        fallback_llm: claude-sonnet@openrouter
+      - class: genai_tk.agents.langchain.middleware.rich_middleware.RichToolCallMiddleware
+      - class: genai_tk.agents.langchain.middleware.observation_truncation_middleware.ObservationTruncationMiddleware
+        max_chars: 14000
+        head_ratio: 0.8
+      - class: genai_tk.agents.langchain.middleware.deduplicate_middleware.DeduplicateToolCallsMiddleware
+        tools: ["get_document_toc", "get_folder_toc", "list_documents", "search_sections", "get_section_content", "web_search"]
+        mode: "stub"
+      - class: genai_graph.agent.middleware.map_before_search.MapBeforeSearchMiddleware
+        max_consecutive: 3
+      - class: genai_graph.agent.middleware.wrap_up.WrapUpMiddleware
+        soft_limit: 28
+        hard_limit: 40
+    checkpointer:
+      type: none
+    backend:
+      type: none
+    enable_planning: true
+    enable_file_system: true
+    fs_permissions:
+      - operations: ["read", "write"]
+        paths: ["/officeqa_v2/data/**"]
+        mode: deny
+    recursion_limit: 160

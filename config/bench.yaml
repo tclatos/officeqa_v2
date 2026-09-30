@@ -1,0 +1,55 @@
+# OfficeQA Pro V2 evaluation configuration.
+# Select active profile via CLI `--profile <name>` (defaults to `default_profile`).
+default_profile: officeqa_v2
+dataset_adapter: officeqa_v2.adapter.OfficeQAV2Adapter
+
+# Shared outcome paths across all bench profiles
+paths:
+  runs: ${paths.data_root}/officeqa_v2/{profile}/runs.jsonl
+  scores: ${paths.data_root}/officeqa_v2/{profile}/scores.jsonl
+  scores_summary: ${paths.data_root}/officeqa_v2/{profile}/scores_summary.json
+
+bench_profiles:
+  officeqa_v2:
+    description: "OfficeQA Pro V2 evaluation on Accounts of Receipts and Expenditures"
+    dataset_adapter: officeqa_v2.adapter.OfficeQAV2Adapter
+    docgraph_profile: officeqa_v2
+    agent_profile: officeqa_v2
+
+    files:
+      pathspecs:
+        - "*"
+      docs: []
+      limit: null
+
+    runner:
+      concurrency: 4
+      folder_id: null
+      monitoring: null
+
+    grader:
+      enabled: true
+      llm: DeepSeek-V4-Pro-0813@openrouter
+      concurrency: 4
+
+  default:
+    description: "OfficeQA Pro V2 evaluation (default alias)"
+    dataset_adapter: officeqa_v2.adapter.OfficeQAV2Adapter
+    docgraph_profile: officeqa_v2
+    agent_profile: officeqa_v2
+
+    files:
+      pathspecs:
+        - "*"
+      docs: []
+      limit: null
+
+    runner:
+      concurrency: 4
+      folder_id: null
+      monitoring: null
+
+    grader:
+      enabled: true
+      llm: DeepSeek-V4-Pro-0813@openrouter
+      concurrency: 4

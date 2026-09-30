@@ -1,0 +1,21 @@
+# OfficeQA markdownize configuration
+# Overrides 'best' profile to strictly use Mistral OCR with HTML tables and image extraction.
+
+markdownize_converters:
+  mistral_ocr:
+    class: genai_tk.extra.markdownize.mistral_ocr_converter.MistralOCRConverter
+    params:
+      model: mistral-ocr-latest
+      batch_size: 100
+      use_batch_api: true
+      include_image_base64: true
+      image_min_size: 100
+      images_dir: data/markdown_multi/images
+      table_format: html
+      describe_uncaptioned_images: true
+
+markdownize_profiles:
+  best:
+    rules:
+      - pathspec: "**/*"
+        converter: mistral_ocr
