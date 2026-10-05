@@ -41,7 +41,7 @@ agents:
         mode: "stub"
       - class: genai_graph.agent.middleware.map_before_search.MapBeforeSearchMiddleware
         max_consecutive: 3
-      - class: genai_graph.agent.middleware.wrap_up.WrapUpMiddleware
+      - class: genai_tk.agents.langchain.middleware.wrap_up_middleware.WrapUpMiddleware
         soft_limit: 28
         hard_limit: 40
     checkpointer:
@@ -94,7 +94,7 @@ agents:
         mode: "stub"
       - class: genai_graph.agent.middleware.map_before_search.MapBeforeSearchMiddleware
         max_consecutive: 3
-      - class: genai_graph.agent.middleware.wrap_up.WrapUpMiddleware
+      - class: genai_tk.agents.langchain.middleware.wrap_up_middleware.WrapUpMiddleware
         soft_limit: 28
         hard_limit: 40
     checkpointer:

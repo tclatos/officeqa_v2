@@ -2134,8 +2134,8 @@ requires-dist = [
     { name = "devtools", specifier = ">=0.12.2" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.6" },
     { name = "genai-graph", extras = ["harnessing"], marker = "extra == 'all'" },
-    { name = "genai-tk", editable = "../genai-tk" },
-    { name = "genai-tk", extras = ["harnessing"], marker = "extra == 'harnessing'", editable = "../genai-tk" },
+    { name = "genai-tk" },
+    { name = "genai-tk", extras = ["harnessing"], marker = "extra == 'harnessing'" },
     { name = "ladybug", specifier = ">=0.16.1" },
     { name = "langchain-classic", specifier = ">=1.0.0" },
     { name = "langchain-litellm", specifier = ">=0.3.2" },
@@ -2175,6 +2175,7 @@ dev = [
     { name = "ipykernel", specifier = ">=6.29.4" },
     { name = "ipywidgets", specifier = ">=8.1.2" },
     { name = "pytest", specifier = ">=8.1.1" },
+    { name = "pytest-beartype", specifier = ">=0.2.0" },
     { name = "pytest-cov", specifier = ">=7.1.0" },
     { name = "ruff", specifier = ">=0.9.1" },
 ]
@@ -2185,6 +2186,7 @@ extra = [
     { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "tavily-python", specifier = ">=0.7.12" },
 ]
+toolkit = [{ name = "genai-tk", git = "https://github.com/tclatos/genai-tk?rev=main" }]
 ui = [
     { name = "sse-starlette", specifier = ">=2.1.0" },
     { name = "streamlit", extras = ["pdf"], specifier = ">=1.49" },
@@ -2282,10 +2284,12 @@ requires-dist = [
     { name = "deepagents", marker = "extra == 'harnessing'", specifier = ">=0.7.13" },
     { name = "deerflow-harness", extras = ["tui"], marker = "extra == 'harnessing'", git = "https://github.com/bytedance/deer-flow?subdirectory=backend%2Fpackages%2Fharness&rev=795af20a6b79b22fd9e95f674554605c5bfb6cdc" },
     { name = "devtools", specifier = ">=0.12.2" },
+    { name = "docling", marker = "extra == 'docling'", specifier = ">=2.130" },
+    { name = "easyocr", marker = "extra == 'docling'", specifier = ">=1.7" },
     { name = "en-core-web-md", marker = "extra == 'nlp'", url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.8.0/en_core_web_md-3.8.0-py3-none-any.whl" },
     { name = "fastembed", specifier = ">=0.8.0" },
     { name = "fuzzysearch", specifier = ">=0.8.0" },
-    { name = "genai-tk", extras = ["harnessing", "browser", "nlp", "postgres", "streamlit", "baml", "chromadb"], marker = "extra == 'all'" },
+    { name = "genai-tk", extras = ["harnessing", "browser", "nlp", "postgres", "streamlit", "baml", "chromadb", "docling"], marker = "extra == 'all'" },
     { name = "httpx", specifier = ">=0.28.0" },
     { name = "jinaai", specifier = ">=0.2.10" },
     { name = "jinja2", specifier = ">=3.1.0" },
@@ -2355,7 +2359,7 @@ requires-dist = [
     { name = "xxhash", specifier = ">=3.6.0" },
     { name = "zvec", specifier = ">=0.5.0" },
 ]
-provides-extras = ["harnessing", "browser", "nlp", "postgres", "streamlit", "baml", "chromadb", "monitoring", "all"]
+provides-extras = ["harnessing", "browser", "nlp", "postgres", "streamlit", "baml", "chromadb", "docling", "monitoring", "all"]
 
 [package.metadata.requires-dev]
 dev = [
